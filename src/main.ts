@@ -23,3 +23,7 @@
 // Interface: Localizavel - Implementada por classes que possuem localização física.
 // Função Genérica: registrarItem - Permite adicionar qualquer tipo de ItemAcervo ao acervo, garantindo a tipagem correta.
 // Lógica de Negócio: Implementada para garantir o funcionamento correto do sistema,  validação de disponibilidade de itens.
+
+let lucas = "Lucas";
+
+console.log(lucas);
