@@ -1,4 +1,3 @@
-import { Localizavel } from "../Interfaces/localizavel";
 import { ItemAcervo } from "./ItemAcervo";
 
 export class Biblioteca<T extends ItemAcervo> {
@@ -19,22 +18,27 @@ export class Biblioteca<T extends ItemAcervo> {
   read(): void {
     this.collection.forEach((item) => console.log(item));
   }
-  update(item: T, id: number) {
+  update(item: T, id: number): T | void {
     const index = this.collection.findIndex((item) => item.id);
     const obj = this.collection[index];
     if (id === obj.id) {
-      this.collection[index] = item;
+      return (this.collection[index] = item);
     } else {
       console.log("ID passado não corresponde ao item informado");
     }
   }
-  delete(id: number) {
+  delete(id: number): T | void {
     const index = this.collection.findIndex((item) => item.id === id);
     const obj = this.collection[index];
     if (obj.available) {
       this.collection.slice(index, 1);
+      return obj;
     } else {
       console.log("Item não pode ser excluído pois esta emprestado.");
     }
+  }
+  findAllByTitle(title: string): T[] {
+    const listOfItens = this.collection.filter((item) => item.title === title);
+    return listOfItens;
   }
 }
