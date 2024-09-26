@@ -1,11 +1,17 @@
-import { ItemAcervo } from './ItemAcervo';
+import { Publicacao } from './publicacao';
 
-export class Revista extends ItemAcervo {
-    constructor(titulo: string, ano: number, localizacao: string, public editora: string, public numeroEdicao: number) {
-        super(titulo, ano, localizacao);
+export class Revista extends Publicacao {
+    constructor(
+        titulo: string,
+        ano: number,
+        localizacao: string,
+        editora: string,
+        public numeroEdicao: number
+    ) {
+        super(titulo, ano, localizacao, editora);
     }
 
     getDetalhes(): string {
-        return `Revista: ${this.titulo}, Edição: ${this.numeroEdicao}, publicado em ${this.ano}, editora: ${this.editora}, localizado em: ${this.localizacao}`;
+        return `Titulo da Revista: ${this.titulo}, ${super.getDetalhes()}, Edição: ${this.numeroEdicao} `;
     }
 }

@@ -31,10 +31,16 @@ import { CD } from './Models/cd';
 import { DVD } from './Models/dvd';
 import { Biblioteca } from './Models/biblioteca';
 
-function cadastrarLivro(biblioteca: Biblioteca) {
-    const titulo = readlineSync.question('Titulo do livro: ');
+// Funcao auxiliar para coletar dados basicos de qualquer item
+function coletarDadosBase() {
+    const titulo = readlineSync.question('Titulo: ');
     const ano = readlineSync.questionInt('Ano de publicacao: ');
     const localizacao = readlineSync.question('Localizacao na biblioteca: ');
+    return { titulo, ano, localizacao };
+}
+
+function cadastrarLivro(biblioteca: Biblioteca) {
+    const { titulo, ano, localizacao } = coletarDadosBase();
     const editora = readlineSync.question('Editora: ');
     const isbn = readlineSync.question('ISBN: ');
 
@@ -44,9 +50,7 @@ function cadastrarLivro(biblioteca: Biblioteca) {
 }
 
 function cadastrarRevista(biblioteca: Biblioteca) {
-    const titulo = readlineSync.question('Titulo da revista: ');
-    const ano = readlineSync.questionInt('Ano de publicacao: ');
-    const localizacao = readlineSync.question('Localizacao na biblioteca: ');
+    const { titulo, ano, localizacao } = coletarDadosBase();
     const editora = readlineSync.question('Editora: ');
     const numeroEdicao = readlineSync.questionInt('Numero da edicao: ');
 
@@ -56,9 +60,7 @@ function cadastrarRevista(biblioteca: Biblioteca) {
 }
 
 function cadastrarCD(biblioteca: Biblioteca) {
-    const titulo = readlineSync.question('Titulo do CD: ');
-    const ano = readlineSync.questionInt('Ano de lancamento: ');
-    const localizacao = readlineSync.question('Localizacao na biblioteca: ');
+    const { titulo, ano, localizacao } = coletarDadosBase();
     const duracao = readlineSync.questionInt('Duracao (em minutos): ');
     const artista = readlineSync.question('Artista: ');
 
@@ -68,9 +70,7 @@ function cadastrarCD(biblioteca: Biblioteca) {
 }
 
 function cadastrarDVD(biblioteca: Biblioteca) {
-    const titulo = readlineSync.question('Titulo do DVD: ');
-    const ano = readlineSync.questionInt('Ano de lancamento: ');
-    const localizacao = readlineSync.question('Localizacao na biblioteca: ');
+    const { titulo, ano, localizacao } = coletarDadosBase();
     const duracao = readlineSync.questionInt('Duracao (em minutos): ');
     const diretor = readlineSync.question('Diretor: ');
 
@@ -81,11 +81,11 @@ function cadastrarDVD(biblioteca: Biblioteca) {
 
 function editarItem(biblioteca: Biblioteca) {
     biblioteca.listarItens();
-    const index = readlineSync.questionInt('\nDigite o índice do item que deseja editar: ');
+    const index = readlineSync.questionInt('Digite o indice do item que deseja editar: ');
 
     const item = biblioteca.getItem(index);
     if (item) {
-        const novoTitulo = readlineSync.question(`\nNovo titulo (${item.titulo}): `) || item.titulo;
+        const novoTitulo = readlineSync.question(`Novo titulo (${item.titulo}): `) || item.titulo;
         const novoAno = readlineSync.questionInt(`Novo ano (${item.ano}): `) || item.ano;
         const novaLocalizacao = readlineSync.question(`Nova localizacao (${item.localizacao}): `) || item.localizacao;
 
@@ -106,12 +106,25 @@ function removerItem(biblioteca: Biblioteca) {
     if (biblioteca.removerItem(index)) {
         console.log('Item removido com sucesso!');
     } else {
-        console.log('Índice inválido.');
+        console.log('Indice invalido.');
     }
 }
 
 function perguntarTipoItem(biblioteca: Biblioteca) {
-    const tipo = readlineSync.question('\nQue tipo de item deseja cadastrar?\n\n1 - Livro,\n2 - Revista,\n3 - CD,\n4 - DVD\n\nDigite aqui: ');
+    console.log(`
+    ========================================
+          Cadastro de Itens na Biblioteca
+    ========================================
+    Escolha o tipo de item que deseja cadastrar:
+    ----------------------------------------
+    [1] - Livro
+    [2] - Revista
+    [3] - CD
+    [4] - DVD
+    ----------------------------------------
+    `);
+
+    const tipo = readlineSync.question('Digite aqui: ');
     switch (tipo) {
         case '1':
             cadastrarLivro(biblioteca);
@@ -126,38 +139,50 @@ function perguntarTipoItem(biblioteca: Biblioteca) {
             cadastrarDVD(biblioteca);
             break;
         default:
-            console.log('Tipo inválido.');
+            console.log('Tipo invalido.');
     }
 }
 
 function perguntarProximaAcao(biblioteca: Biblioteca) {
-    const acao = readlineSync.question('\nDeseja cadastrar, listar, editar, remover ou sair?\n 1 - Cadastrar:\n 2 - Listar acervo:\n 3 - Editar:\n 4 - Remover:\n 5 - Sair:\n Digite aqui: ');
+    let acao: string;
+    do {
+        console.log(`
+        ========================================
+                  Biblioteca Online
+        ========================================
+        Escolha uma das opcoes abaixo:
+        ----------------------------------------
+        [1] - Cadastrar novo item
+        [2] - Listar acervo
+        [3] - Editar item existente
+        [4] - Remover item do acervo
+        [5] - Sair
+        ----------------------------------------
+        `);
 
-    switch (acao) {
-        case '1':
-            perguntarTipoItem(biblioteca);
-            perguntarProximaAcao(biblioteca);
-            break;
-        case '2':
-            console.log('Itens no acervo:');
-            biblioteca.listarItens();
-            perguntarProximaAcao(biblioteca);
-            break;
-        case '3':
-            editarItem(biblioteca);
-            perguntarProximaAcao(biblioteca);
-            break;
-        case '4':
-            removerItem(biblioteca);
-            perguntarProximaAcao(biblioteca);
-            break;
-        case '5':
-            console.log('Saindo...');
-            return;
-        default:
-            console.log('Opção invalida.');
-            perguntarProximaAcao(biblioteca);
-    }
+        acao = readlineSync.question('Digite o numero da acao desejada: ');
+
+        switch (acao) {
+            case '1':
+                perguntarTipoItem(biblioteca);
+                break;
+            case '2':
+                console.log('\nItens no acervo:');
+                biblioteca.listarItens();
+                break;
+            case '3':
+                editarItem(biblioteca);
+                break;
+            case '4':
+                removerItem(biblioteca);
+                break;
+            case '5':
+                console.log('\nObrigado por utilizar a Biblioteca Online. Ate logo!\n');
+                break;
+            default:
+                console.log('\nOpcao invalida. Por favor, tente novamente.\n');
+        }
+    } while (acao !== '5');
 }
 
 const biblioteca = new Biblioteca();

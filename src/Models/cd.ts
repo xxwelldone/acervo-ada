@@ -1,11 +1,17 @@
-import { ItemAcervo } from './ItemAcervo';
+import { Midia } from './midia';
 
-export class CD extends ItemAcervo {
-    constructor(titulo: string, ano: number, localizacao: string, public duracao: number, public artista: string) {
-        super(titulo, ano, localizacao);
+export class CD extends Midia {
+    constructor(
+        titulo: string,
+        ano: number,
+        localizacao: string,
+        duracao: number,
+        public artista: string
+    ) {
+        super(titulo, ano, localizacao, duracao);
     }
 
     getDetalhes(): string {
-        return `CD: ${this.titulo}, duração de ${this.duracao} minutos, Artista: ${this.artista}, localizado em: ${this.localizacao}`;
+        return `Titulo do CD: ${this.titulo}, Artista: ${this.artista}, ${super.getDetalhes()}`;
     }
 }
