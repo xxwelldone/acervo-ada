@@ -1,1 +1,3 @@
-export interface Localizavel {}
+export interface Localizavel {
+    getLocalizacao(): string;
+}
