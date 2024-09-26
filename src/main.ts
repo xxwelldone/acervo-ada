@@ -31,7 +31,6 @@ import { CD } from './Models/cd';
 import { DVD } from './Models/dvd';
 import { Biblioteca } from './Models/biblioteca';
 
-// Funcao auxiliar para coletar dados basicos de qualquer item
 function coletarDadosBase() {
     const titulo = readlineSync.question('Titulo: ');
     const ano = readlineSync.questionInt('Ano de publicacao: ');
@@ -156,7 +155,9 @@ function perguntarProximaAcao(biblioteca: Biblioteca) {
         [2] - Listar acervo
         [3] - Editar item existente
         [4] - Remover item do acervo
-        [5] - Sair
+        [5] - Emprestar item
+        [6] - Devolver item
+        [7] - Sair
         ----------------------------------------
         `);
 
@@ -177,12 +178,22 @@ function perguntarProximaAcao(biblioteca: Biblioteca) {
                 removerItem(biblioteca);
                 break;
             case '5':
+                biblioteca.listarItens();
+                const indexEmprestar = readlineSync.questionInt('Digite o indice do item que deseja emprestar: ');
+                biblioteca.emprestarItem(indexEmprestar);
+                break;
+            case '6':
+                biblioteca.listarItens();
+                const indexDevolver = readlineSync.questionInt('Digite o indice do item que deseja devolver: ');
+                biblioteca.devolverItem(indexDevolver);
+                break;
+            case '7':
                 console.log('\nObrigado por utilizar a Biblioteca Online. Ate logo!\n');
                 break;
             default:
                 console.log('\nOpcao invalida. Por favor, tente novamente.\n');
         }
-    } while (acao !== '5');
+    } while (acao !== '7');
 }
 
 const biblioteca = new Biblioteca();
