@@ -5,12 +5,13 @@ export class Publicacao extends ItemAcervo {
   public language: string;
 
   constructor(
+    id: number,
     title: string,
     available: boolean,
     publisher: string,
     language: string
   ) {
-    super(title, available);
+    super(id, title, available);
     this.publisher = publisher;
     this.language = language;
   }

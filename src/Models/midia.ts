@@ -5,12 +5,13 @@ export class Midia extends ItemAcervo {
   public genre: string;
 
   constructor(
+    id: number,
     title: string,
     available: boolean,
     duration: number,
     genre: string
   ) {
-    super(title, available);
+    super(id, title, available);
     this.duration = duration;
     this.genre = genre;
   }

@@ -1,12 +1,16 @@
+import { Localizavel } from "../Interfaces/localizavel";
 import { Publicacao } from "./publicacao";
 
-export class Livro extends Publicacao {
+export class Livro extends Publicacao implements Localizavel {
   public author: string;
   public genre: string;
   public ISBN: string;
   public yearPublished: number;
+  public bookcase: string;
+  public shelft: string;
 
   constructor(
+    id: number,
     title: string,
     available: boolean,
     publisher: string,
@@ -14,12 +18,16 @@ export class Livro extends Publicacao {
     author: string,
     genre: string,
     ISBN: string,
-    yearPublished: number
+    yearPublished: number,
+    bookcase: string,
+    shelft: string
   ) {
-    super(title, available, publisher, language);
+    super(id, title, available, publisher, language);
     this.author = author;
     this.genre = genre;
     this.ISBN = ISBN;
     this.yearPublished = yearPublished;
+    this.bookcase = bookcase;
+    this.shelft = shelft;
   }
 }
