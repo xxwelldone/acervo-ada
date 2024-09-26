@@ -1,1 +1,4 @@
-export interface Localizavel {}
+export interface Localizavel {
+  bookcase: string;
+  shelft: string;
+}

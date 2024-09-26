@@ -1,8 +1,10 @@
 export abstract class ItemAcervo {
   public title: string;
   public available: boolean;
+  public id: number;
 
-  constructor(title: string, available: boolean) {
+  constructor(id: number, title: string, available: boolean) {
+    this.id = id;
     this.title = title;
     this.available = available;
   }
