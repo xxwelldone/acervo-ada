@@ -1,7 +1,7 @@
 import { Localizavel } from "../Interfaces/localizavel";
 import { ItemAcervo } from "./ItemAcervo";
 
-export class Biblioteca<T extends ItemAcervo & Localizavel> {
+export class Biblioteca<T extends ItemAcervo> {
   collection: T[] = [];
   private id = 1;
 
