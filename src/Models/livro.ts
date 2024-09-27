@@ -12,6 +12,6 @@ export class Livro extends Publicacao {
     }
 
     getDetalhes(): string {
-        return `Titulo do Livro: ${this.titulo}, ${super.getDetalhes()}, ISBN: ${this.isbn},  `;
+        return `Titulo do Livro: ${this.titulo}, ${super.getDetalhes()}, ISBN: ${this.isbn}`;
     }
 }

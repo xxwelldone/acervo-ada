@@ -93,8 +93,6 @@ function editarItem(biblioteca: Biblioteca) {
         item.localizacao = novaLocalizacao;
 
         console.log('Item editado com sucesso!');
-    } else {
-        console.log('Indice invalido.');
     }
 }
 
@@ -104,8 +102,6 @@ function removerItem(biblioteca: Biblioteca) {
 
     if (biblioteca.removerItem(index)) {
         console.log('Item removido com sucesso!');
-    } else {
-        console.log('Indice invalido.');
     }
 }
 
