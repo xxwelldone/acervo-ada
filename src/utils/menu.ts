@@ -1,6 +1,9 @@
 import * as prompt from "readline-sync";
 import { Biblioteca } from "../Models/biblioteca";
 import { CD } from "../Models/cd";
+import { DVD } from "../Models/dvd";
+import { Livro } from "../Models/livro";
+import { Revista } from "../Models/revista";
 export class Menu {
   library = new Biblioteca();
   options: string[] = [
@@ -53,34 +56,102 @@ export class Menu {
 
     switch (opt) {
       case 1:
-        let title: string = prompt.question("Title: ");
-        let duration: number = Number(prompt.question("Duration: "));
-        let genre: string = prompt.question("Genre: ");
+        let titleCD: string = prompt.question("Title: ");
+        let durationCD: number = Number(prompt.question("Duration: "));
+        let genreCD: string = prompt.question("Genre: ");
         let artist: string = prompt.question("Artist: ");
         let tracks: number = Number(prompt.question("How many: "));
         let recordLabel: string = prompt.question("Record label: ");
-        let bookcase: string = prompt.question("Bookcase: ");
-        let shelft: string = prompt.question("Shelft: ");
+        let bookcaseCD: string = prompt.question("Bookcase: ");
+        let shelftCD: string = prompt.question("Shelft: ");
 
-        let created = this.library.create(
+        let createdCD = this.library.create(
           new CD(
             this.library.generateID(),
-            title,
-            true,
-            duration,
-            genre,
+            titleCD,
+            durationCD,
+            genreCD,
             artist,
             tracks,
             recordLabel,
-            bookcase,
-            shelft
+            bookcaseCD,
+            shelftCD
           )
         );
-        console.log("Created: ", created);
+        console.log("Created: ", createdCD);
 
         break;
+      case 2:
+        let titleDVD: string = prompt.question("Title: ");
+        let durationDVD: number = Number(prompt.question("Duration: "));
+        let genreDVD: string = prompt.question("Genre: ");
+        let type: string = prompt.question("Type: ");
+        let bookcaseDVD: string = prompt.question("Bookcase: ");
+        let shelftDVD: string = prompt.question("Shelft: ");
+        let createdDVD = new DVD(
+          this.library.generateID(),
+          titleDVD,
+          durationDVD,
+          genreDVD,
+          type,
+          bookcaseDVD,
+          shelftDVD
+        );
+        console.log("Created: ", createdDVD);
+        break;
+      case 3:
+        let titleBook: string = prompt.question("Title: ");
+        let publisherBook: string = prompt.question("Publisher: ");
+        let languageBook: string = prompt.question("Language Ex(PT-BR): ");
+        let authorBook: string = prompt.question("Author: ");
+        let genreBook: string = prompt.question("Genre: ");
+        let ISBNBook: string = prompt.question("ISBN: ");
+        let yearPublishedBook: number = Number(
+          prompt.question("Year Published (YYYY): ")
+        );
+        let bookcaseBook: string = prompt.question("Bookcase: ");
+        let shelftBook: string = prompt.question("Shelft: ");
 
+        let createdBook = new Livro(
+          this.library.generateID(),
+          titleBook,
+          publisherBook,
+          languageBook,
+          authorBook,
+          genreBook,
+          ISBNBook,
+          yearPublishedBook,
+          bookcaseBook,
+          shelftBook
+        );
+        console.log("Created: ", createdBook);
+        break;
+      case 4:
+        let titleMagazine: string = prompt.question("Title: ");
+        let publisherMagazine: string = prompt.question("Publisher: ");
+        let languageMagazine: string = prompt.question("Language Ex(PT-BR): ");
+        let issueMagazine: Date = new Date(
+          prompt.question("Issue Date (YYYY-MM-DD): ")
+        );
+        let bookcaseMagazine: string = prompt.question("Bookcase: ");
+        let shelftMagazine: string = prompt.question("Shelft: ");
+
+        let createdMagazine = new Revista(
+          this.library.generateID(),
+          titleMagazine,
+          publisherMagazine,
+          languageMagazine,
+          issueMagazine,
+          bookcaseMagazine,
+          shelftMagazine
+        );
+
+        console.log("Created: ", createdMagazine);
+
+        break;
       default:
+        console.log("Invalid option");
+
         break;
     }
   }

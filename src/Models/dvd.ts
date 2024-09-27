@@ -2,20 +2,19 @@ import { Localizavel } from "../Interfaces/localizavel";
 import { Midia } from "./midia";
 
 export class DVD extends Midia implements Localizavel {
-  public type: "Movie" | "Music";
+  public type: string;
   public bookcase: string;
   public shelft: string;
   constructor(
     id: number,
     title: string,
-    available: boolean,
     duration: number,
     genre: string,
-    type: "Movie" | "Music",
+    type: string,
     bookcase: string,
     shelft: string
   ) {
-    super(id, title, available, duration, genre);
+    super(id, title, duration, genre);
     this.type = type;
     this.bookcase = bookcase;
     this.shelft = shelft;

@@ -8,14 +8,13 @@ export class Revista extends Publicacao implements Localizavel {
   constructor(
     id: number,
     title: string,
-    available: boolean,
     publisher: string,
     language: string,
     issue: Date,
     bookcase: string,
     shelft: string
   ) {
-    super(id, title, available, publisher, language);
+    super(id, title, publisher, language);
     this.issue = issue;
     this.bookcase = bookcase;
     this.shelft = shelft;
