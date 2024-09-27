@@ -19,6 +19,7 @@ export class Biblioteca<T extends ItemAcervo> {
     this.collection.forEach((item) => console.log(item));
   }
   update(item: T, id: number): T | void {
+    item.title = this.normalizeText(item.title);
     const index = this.collection.findIndex((item) => item.id);
     const obj = this.collection[index];
     if (id === obj.id) {
@@ -38,7 +39,9 @@ export class Biblioteca<T extends ItemAcervo> {
     }
   }
   findAllByTitle(title: string): T[] {
+    title = this.normalizeText(title);
     const listOfItens = this.collection.filter((item) => item.title === title);
     return listOfItens;
   }
+  constructor() {}
 }

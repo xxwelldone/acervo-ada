@@ -4,6 +4,7 @@
 import { Biblioteca } from "./Models/biblioteca";
 import { DVD } from "./Models/dvd";
 import { Livro } from "./Models/livro";
+import { Menu } from "./utils/menu";
 
 // Funcionalidades Principais:
 // 1. Gerenciamento do Acervo:
@@ -32,43 +33,46 @@ import { Livro } from "./Models/livro";
 // Lógica de Negócio: Implementada para garantir o funcionamento correto do sistema,  validação de disponibilidade de itens.
 
 //teste
-const biblioteca = new Biblioteca();
+// const biblioteca = new Biblioteca();
 
-const dvd = new DVD(
-  biblioteca.generateID(),
-  "X",
-  true,
-  5000,
-  "terror",
-  "Movie",
-  "P",
-  "5"
-);
-const dvd2 = new DVD(
-  biblioteca.generateID(),
-  "X",
-  true,
-  5000,
-  "terror",
-  "Movie",
-  "P",
-  "5"
-);
-const livro = new Livro(
-  biblioteca.generateID(),
-  "1984",
-  false,
-  "Penguin",
-  "EN-GB",
-  "George Orwell",
-  "Fantasy",
-  "172643",
-  1964,
-  "P",
-  "2"
-);
+// const dvd = new DVD(
+//   biblioteca.generateID(),
+//   "X",
+//   true,
+//   5000,
+//   "terror",
+//   "Movie",
+//   "P",
+//   "5"
+// );
+// const dvd2 = new DVD(
+//   biblioteca.generateID(),
+//   "X",
+//   true,
+//   5000,
+//   "terror",
+//   "Movie",
+//   "P",
+//   "5"
+// );
+// const livro = new Livro(
+//   biblioteca.generateID(),
+//   "1984",
+//   false,
+//   "Penguin",
+//   "EN-GB",
+//   "George Orwell",
+//   "Fantasy",
+//   "172643",
+//   1964,
+//   "P",
+//   "2"
+// );
 
-biblioteca.create(dvd);
-biblioteca.create(livro);
-biblioteca.create(dvd2);
-biblioteca.read();
+// biblioteca.create(dvd);
+// biblioteca.create(livro);
+// biblioteca.create(dvd2);
+// biblioteca.read();
+
+const menu = new Menu();
+menu.main();
