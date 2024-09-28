@@ -1,9 +1,9 @@
 import * as readline from 'readline';
-import { Biblioteca } from './models/biblioteca';
-import { Livro } from './models/livro';
-import { Revista } from './models/revista';
-import { CD } from './models/cd';
-import { DVD } from './models/dvd';
+import { Biblioteca } from './Models/biblioteca';
+import { Livro } from './Models/livro';
+import { Revista } from './Models/revista';
+import { CD } from './Models/cd';
+import { DVD } from './Models/dvd';
 
 const rl = readline.createInterface({
     input: process.stdin,

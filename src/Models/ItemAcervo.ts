@@ -25,8 +25,16 @@ export abstract class ItemAcervo<T> implements Localizavel {
         return this._titulo;
     }
 
+    set titulo(novoTitulo: string) {
+        this._titulo = novoTitulo;
+    }
+
     get anoPublicacao(): number {
         return this._anoPublicacao;
+    }
+
+    set anoPublicacao(novoAno: number) {
+        this._anoPublicacao = novoAno;
     }
 
     get disponivel(): boolean {
@@ -36,9 +44,10 @@ export abstract class ItemAcervo<T> implements Localizavel {
     set disponivel(valor: boolean) {
         this._disponivel = valor;
     }
+    
 
     private gerarId(): string {
-        const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const numeros = '0123456789';
         let id = '';
         for (let i = 0; i < 3; i++) {
