@@ -39,7 +39,7 @@ export class Biblioteca<T extends ItemAcervo> {
     if (index >= 0) {
       const obj = this.collection[index];
       if (obj.available) {
-        this.collection.slice(index, 1);
+        this.collection.splice(index, 1);
         console.log("Deleted");
 
         console.table(obj);
