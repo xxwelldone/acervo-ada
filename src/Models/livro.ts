@@ -1,24 +1,48 @@
 import { Publicacao } from './publicacao';
 
-export class Livro extends Publicacao {
-    private isbn: string;
-    private autor: string;
+interface DetalhesLivro {
+    id: string;
+    titulo: string;
+    autor: string;
+    anoPublicacao: number;
+    editora: string;
+    isbn: string;
+    edicao: number;
+}
 
-    constructor(id: number, titulo: string, anoPublicacao: number, editora: string, isbn: string, autor: string) {
-        super(id, titulo, anoPublicacao, editora);
-        this.isbn = isbn;
-        this.autor = autor;
+export class Livro extends Publicacao<DetalhesLivro> {
+    private _autor: string;
+    private _isbn: string;
+    private _edicao: number;
+
+    constructor(titulo: string, autor: string, anoPublicacao: number, editora: string, isbn: string, edicao: number) {
+        super(titulo, anoPublicacao, editora);
+        this._autor = autor;
+        this._isbn = isbn;
+        this._edicao = edicao;
     }
 
-    obterDetalhes(): string {
-        return `Livro: ${this.titulo} por ${this.autor}, ISBN: ${this.isbn}, Ano: ${this.anoPublicacao}, Editora: ${this.editora}, Localização: ${this.obterLocalizacao()}`;
+    get autor(): string {
+        return this._autor;
     }
 
-    getAutor(): string {
-        return this.autor;
+    get isbn(): string {
+        return this._isbn;
     }
 
-    getIsbn(): string {
-        return this.isbn;
+    get edicao(): number {
+        return this._edicao;
+    }
+
+    obterDetalhes(): DetalhesLivro {
+        return {
+            id: this.id,
+            titulo: this.titulo,
+            autor: this.autor,
+            anoPublicacao: this.anoPublicacao,
+            editora: this.editora,
+            isbn: this.isbn,
+            edicao: this.edicao
+        };
     }
 }
