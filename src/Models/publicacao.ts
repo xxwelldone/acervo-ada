@@ -1,25 +1,14 @@
 import { ItemAcervo } from './ItemAcervo';
-import { Localizavel } from '../interfaces/localizavel';
 
-export class Publicacao extends ItemAcervo implements Localizavel {
-    protected editora: string;
-    protected localizacao: string;
+export abstract class Publicacao<T> extends ItemAcervo<T> {
+    protected _editora: string;
 
-    constructor(id: number, titulo: string, anoPublicacao: number, editora: string) {
-        super(id, titulo, anoPublicacao);
-        this.editora = editora;
-        this.localizacao = '';
+    constructor(titulo: string, anoPublicacao: number, editora: string) {
+        super(titulo, anoPublicacao);
+        this._editora = editora;
     }
 
-    obterLocalizacao(): string {
-        return this.localizacao;
-    }
-
-    definirLocalizacao(localizacao: string): void {
-        this.localizacao = localizacao;
-    }
-
-    obterDetalhes(): string {
-        return `Publicação: ${this.titulo}, Editora: ${this.editora}, Ano: ${this.anoPublicacao}, Localização: ${this.localizacao}`;
+    get editora(): string {
+        return this._editora;
     }
 }
