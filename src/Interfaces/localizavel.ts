@@ -1,4 +1,4 @@
 export interface Localizavel {
-    obterLocalizacao(): string;
-    definirLocalizacao(localizacao: string): void;
+    estante: string;
+    prateleira: number;
 }
