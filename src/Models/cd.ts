@@ -1,14 +1,32 @@
 import { Midia } from './midia';
 
-export class CD extends Midia {
-    private artista: string;
+interface DetalhesCD {
+    id: string;
+    titulo: string;
+    anoPublicacao: number;
+    duracao: string;
+    artista: string;
+}
 
-    constructor(id: number, titulo: string, anoPublicacao: number, duracao: number, artista: string) {
-        super(id, titulo, anoPublicacao, duracao);
-        this.artista = artista;
+export class CD extends Midia<DetalhesCD> {
+    private _artista: string;
+
+    constructor(titulo: string, anoPublicacao: number, duracao: string, artista: string) {
+        super(titulo, anoPublicacao, duracao);
+        this._artista = artista;
     }
 
-    obterDetalhes(): string {
-        return `CD: ${this.titulo} por ${this.artista}, Duração: ${this.duracao} minutos, Ano: ${this.anoPublicacao}, Localização: ${this.obterLocalizacao()}`;
+    get artista(): string {
+        return this._artista;
+    }
+
+    obterDetalhes(): DetalhesCD {
+        return {
+            id: this.id,
+            titulo: this.titulo,
+            anoPublicacao: this.anoPublicacao,
+            duracao: this.duracao,
+            artista: this.artista
+        };
     }
 }
