@@ -22,12 +22,14 @@ export class Biblioteca<T extends ItemAcervo> {
       console.log("No data saved");
     }
   }
-  update(item: T): T | void {
-    item.title = this.normalizeText(item.title);
-    const index = this.collection.findIndex((item) => item.id);
+  update(updatedItem: T): T | void {
+    updatedItem.title = this.normalizeText(updatedItem.title);
+    const index = this.collection.findIndex(
+      (item) => updatedItem.id === item.id
+    );
 
     if (index >= 0) {
-      return (this.collection[index] = item);
+      return (this.collection[index] = updatedItem);
     } else {
       console.log("ID passado não corresponde ao item informado");
     }
@@ -75,6 +77,7 @@ export class Biblioteca<T extends ItemAcervo> {
         console.log(
           `Now, this item is barrowed to you, give it back by using it's id: ${this.collection[index].id}`
         );
+        console.table(this.collection[index]);
       } else {
         console.log("This item is already barrowed");
       }

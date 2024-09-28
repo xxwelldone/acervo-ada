@@ -215,8 +215,7 @@ class Menu {
                 let bookcaseBook = prompt.question("Bookcase: ");
                 let shelftBook = prompt.question("Shelft: ");
                 let createdBook = new livro_1.Livro(idBook, titleBook, publisherBook, languageBook, authorBook, genreBook, ISBNBook, yearPublishedBook, bookcaseBook, shelftBook);
-                this.library.update(createdBook);
-                console.log(this.library.getById(createdBook.id));
+                console.log("Updated: ", this.library.update(createdBook));
                 break;
             case 4:
                 let idMagazine = Number(prompt.question("What's the ID to be updated: "));
