@@ -1,18 +1,32 @@
 import { Publicacao } from './publicacao';
 
-export class Revista extends Publicacao {
-    private edicao: string;
+interface DetalhesRevista {
+    id: string;
+    titulo: string;
+    anoPublicacao: number;
+    editora: string;
+    edicao: number;
+}
 
-    constructor(id: number, titulo: string, anoPublicacao: number, editora: string, edicao: string) {
-        super(id, titulo, anoPublicacao, editora);
-        this.edicao = edicao;
+export class Revista extends Publicacao<DetalhesRevista> {
+    private _edicao: number;
+
+    constructor(titulo: string, anoPublicacao: number, editora: string, edicao: number) {
+        super(titulo, anoPublicacao, editora);
+        this._edicao = edicao;
     }
 
-    obterDetalhes(): string {
-        return `Revista: ${this.titulo}, Edição: ${this.edicao}, Ano: ${this.anoPublicacao}, Editora: ${this.editora}, Localização: ${this.obterLocalizacao()}`;
+    get edicao(): number {
+        return this._edicao;
     }
 
-    getEdicao(): string {
-        return this.edicao;
+    obterDetalhes(): DetalhesRevista {
+        return {
+            id: this.id,
+            titulo: this.titulo,
+            anoPublicacao: this.anoPublicacao,
+            editora: this.editora,
+            edicao: this.edicao
+        };
     }
 }
