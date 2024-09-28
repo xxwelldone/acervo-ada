@@ -298,8 +298,8 @@ export class Menu {
           bookcaseBook,
           shelftBook
         );
-        this.library.update(createdBook);
-        console.log(this.library.getById(createdBook.id));
+
+        console.log("Updated: ", this.library.update(createdBook));
         break;
       case 4:
         let idMagazine = Number(

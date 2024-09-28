@@ -21,11 +21,11 @@ class Biblioteca {
             console.log("No data saved");
         }
     }
-    update(item) {
-        item.title = this.normalizeText(item.title);
-        const index = this.collection.findIndex((item) => item.id);
+    update(updatedItem) {
+        updatedItem.title = this.normalizeText(updatedItem.title);
+        const index = this.collection.findIndex((item) => updatedItem.id === item.id);
         if (index >= 0) {
-            return (this.collection[index] = item);
+            return (this.collection[index] = updatedItem);
         }
         else {
             console.log("ID passado não corresponde ao item informado");
@@ -72,6 +72,7 @@ class Biblioteca {
             if (this.collection[index].available === true) {
                 this.collection[index].available = false;
                 console.log(`Now, this item is barrowed to you, give it back by using it's id: ${this.collection[index].id}`);
+                console.table(this.collection[index]);
             }
             else {
                 console.log("This item is already barrowed");
