@@ -12,7 +12,9 @@ export class Menu {
     "Delete an item;",
     "Find items by title;",
     "Find all items;",
-    "Exist;",
+    "Barrow;",
+    "Give it back;",
+    "Exit;",
   ];
 
   main() {
@@ -29,6 +31,8 @@ export class Menu {
           4. ${this.options[3]}
           5. ${this.options[4]}
           6. ${this.options[5]}
+           7. ${this.options[6]}
+            8. ${this.options[7]}
               `);
       let opt = Number(prompt.question("Choose an option: "));
 
@@ -50,6 +54,18 @@ export class Menu {
           break;
         case 6:
           console.log(this.options[5]);
+          let title = prompt.question("Inform title to be barrowed: ");
+          this.library.barrowed(title);
+
+          break;
+        case 7:
+          console.log(this.options[6]);
+          let id = Number(prompt.question("Inform id to be given back: "));
+          this.library.giveBack(id);
+
+          break;
+        case 8:
+          console.log(this.options[7]);
 
           keep = false;
           break;

@@ -60,6 +60,38 @@ export class Biblioteca<T extends ItemAcervo> {
       console.log("No users were found");
     }
   }
-
+  barrowed(title: string) {
+    title = this.normalizeText(title);
+    const index = this.collection.findIndex((item) => {
+      item.title === title;
+    });
+    if (index >= 0) {
+      if (this.collection[index].available === true) {
+        this.collection[index].available = false;
+        console.log(
+          `Now, this item is barrowed to you, give it back by using it's id: ${this.collection[index].id}`
+        );
+      } else {
+        console.log("This item is already barrowed");
+      }
+    } else {
+      console.log("Item don't exist");
+    }
+  }
+  giveBack(id: number) {
+    const index = this.collection.findIndex((item) => item.id === id);
+    if (index >= 0) {
+      if (this.collection[index].available === false) {
+        console.log("Thanks for returning to our collection.");
+        this.collection[index].available = true;
+      } else {
+        console.log(
+          "Seems like you gave us an ID to be given back, but this item isn't barrowed in the first place."
+        );
+      }
+    } else {
+      console.log("No such ID found");
+    }
+  }
   constructor() {}
 }
