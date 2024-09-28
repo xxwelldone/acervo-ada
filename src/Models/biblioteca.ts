@@ -38,7 +38,9 @@ export class Biblioteca<T extends ItemAcervo> {
       const obj = this.collection[index];
       if (obj.available) {
         this.collection.slice(index, 1);
-        console.log(obj);
+        console.log("Deleted");
+
+        console.table(obj);
       } else {
         console.log("This item is not available to be deleted");
       }
@@ -62,9 +64,11 @@ export class Biblioteca<T extends ItemAcervo> {
   }
   barrowed(title: string) {
     title = this.normalizeText(title);
+
     const index = this.collection.findIndex((item) => {
-      item.title === title;
+      return item.title === title;
     });
+
     if (index >= 0) {
       if (this.collection[index].available === true) {
         this.collection[index].available = false;
@@ -84,6 +88,7 @@ export class Biblioteca<T extends ItemAcervo> {
       if (this.collection[index].available === false) {
         console.log("Thanks for returning to our collection.");
         this.collection[index].available = true;
+        console.table(this.collection[index]);
       } else {
         console.log(
           "Seems like you gave us an ID to be given back, but this item isn't barrowed in the first place."
