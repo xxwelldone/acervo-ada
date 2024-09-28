@@ -12,7 +12,6 @@ export class Livro extends Publicacao implements Localizavel {
   constructor(
     id: number,
     title: string,
-    available: boolean,
     publisher: string,
     language: string,
     author: string,
@@ -22,7 +21,7 @@ export class Livro extends Publicacao implements Localizavel {
     bookcase: string,
     shelft: string
   ) {
-    super(id, title, available, publisher, language);
+    super(id, title, publisher, language);
     this.author = author;
     this.genre = genre;
     this.ISBN = ISBN;

@@ -10,7 +10,6 @@ export class CD extends Midia implements Localizavel {
   constructor(
     id: number,
     title: string,
-    available: boolean,
     duration: number,
     genre: string,
     artist: string,
@@ -19,7 +18,7 @@ export class CD extends Midia implements Localizavel {
     bookcase: string,
     shelft: string
   ) {
-    super(id, title, available, duration, genre);
+    super(id, title, duration, genre);
     this.artist = artist;
     this.tracks = tracks;
     this.recordLabel = recordLabel;

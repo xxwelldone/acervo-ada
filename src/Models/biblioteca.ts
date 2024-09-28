@@ -16,32 +16,50 @@ export class Biblioteca<T extends ItemAcervo> {
     return item;
   }
   read(): void {
-    this.collection.forEach((item) => console.log(item));
+    if (this.collection.length > 0) {
+      this.collection.forEach((item) => console.table(item));
+    } else {
+      console.log("No data saved");
+    }
   }
-  update(item: T, id: number): T | void {
+  update(item: T): T | void {
     item.title = this.normalizeText(item.title);
     const index = this.collection.findIndex((item) => item.id);
-    const obj = this.collection[index];
-    if (id === obj.id) {
+
+    if (index >= 0) {
       return (this.collection[index] = item);
     } else {
       console.log("ID passado não corresponde ao item informado");
     }
   }
-  delete(id: number): T | void {
+  delete(id: number): void {
     const index = this.collection.findIndex((item) => item.id === id);
-    const obj = this.collection[index];
-    if (obj.available) {
-      this.collection.slice(index, 1);
-      return obj;
+    if (index >= 0) {
+      const obj = this.collection[index];
+      if (obj.available) {
+        this.collection.slice(index, 1);
+        console.log(obj);
+      } else {
+        console.log("This item is not available to be deleted");
+      }
     } else {
-      console.log("Item não pode ser excluído pois esta emprestado.");
+      console.log("No users were found");
     }
   }
-  findAllByTitle(title: string): T[] {
+  findAllByTitle(title: string): void {
     title = this.normalizeText(title);
     const listOfItens = this.collection.filter((item) => item.title === title);
-    return listOfItens;
+    console.table(listOfItens);
   }
+  getById(id: number): T | void {
+    if (this.collection.length > 0) {
+      const index = this.collection.findIndex((item) => item.id);
+      const obj = this.collection[index];
+      return obj;
+    } else {
+      console.log("No users were found");
+    }
+  }
+
   constructor() {}
 }
