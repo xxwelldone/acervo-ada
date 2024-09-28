@@ -1,9 +1,9 @@
+import * as readline from 'readline';
 import { Biblioteca } from './models/biblioteca';
 import { Livro } from './models/livro';
 import { Revista } from './models/revista';
 import { CD } from './models/cd';
 import { DVD } from './models/dvd';
-import * as readline from 'readline';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -12,106 +12,103 @@ const rl = readline.createInterface({
 
 const biblioteca = new Biblioteca();
 
-function mostrarMenu() {
-    console.log("\n--- Menu da Biblioteca ---");
+function exibirMenu(): void {
+    console.log("\nMenu Principal");
     console.log("1. Adicionar item ao acervo");
     console.log("2. Remover item do acervo");
     console.log("3. Buscar item no acervo");
-    console.log("4. Listar todo o acervo");
+    console.log("4. Editar item do acervo");
     console.log("5. Emprestar item");
     console.log("6. Devolver item");
-    console.log("0. Sair");
+    console.log("7. Verificar disponibilidade");
+    console.log("8. Listar todos os itens do acervo");
+    console.log("9. Sair");
     rl.question("Escolha uma opção: ", handleMenuChoice);
 }
 
-function handleMenuChoice(choice: string) {
+function handleMenuChoice(choice: string): void {
     switch (choice) {
-        case "1":
+        case '1':
             adicionarItem();
             break;
-        case "2":
+        case '2':
             removerItem();
             break;
-        case "3":
+        case '3':
             buscarItem();
             break;
-        case "4":
-            listarAcervo();
+        case '4':
+            editarItem();
             break;
-        case "5":
+        case '5':
             emprestarItem();
             break;
-        case "6":
+        case '6':
             devolverItem();
             break;
-        case "0":
+        case '7':
+            verificarDisponibilidade();
+            break;
+        case '8':
+            listarTodosItens();
+            break;
+        case '9':
             console.log("Encerrando o programa...");
             rl.close();
-            return;
+            break;
         default:
-            console.log("Opção inválida. Tente novamente.");
-            mostrarMenu();
-            return;
+            console.log("Opção inválida");
+            exibirMenu();
     }
 }
 
-function adicionarItem() {
-    rl.question("Tipo de item (1-Livro, 2-Revista, 3-CD, 4-DVD): ", (tipo) => {
-        rl.question("ID: ", (id) => {
-            rl.question("Título: ", (titulo) => {
-                rl.question("Ano de Publicação: ", (ano) => {
-                    rl.question("Localização (ex: Estante A, Prateleira 2): ", (localizacao) => {
-                        switch (tipo) {
-                            case "1":
-                                rl.question("Editora: ", (editora) => {
-                                    rl.question("ISBN: ", (isbn) => {
-                                        rl.question("Autor: ", (autor) => {
-                                            const livro = new Livro(Number(id), titulo, Number(ano), editora, isbn, autor);
-                                            livro.definirLocalizacao(localizacao);
-                                            biblioteca.registrarItem(livro);
-                                            console.log("Livro adicionado com sucesso!");
-                                            mostrarMenu();
-                                        });
-                                    });
-                                });
-                                break;
-                            case "2":
-                                rl.question("Editora: ", (editora) => {
-                                    rl.question("Edição: ", (edicao) => {
-                                        const revista = new Revista(Number(id), titulo, Number(ano), editora, edicao);
-                                        revista.definirLocalizacao(localizacao);
-                                        biblioteca.registrarItem(revista);
-                                        console.log("Revista adicionada com sucesso!");
-                                        mostrarMenu();
-                                    });
-                                });
-                                break;
-                            case "3":
-                                rl.question("Duração (em minutos): ", (duracao) => {
-                                    rl.question("Artista: ", (artista) => {
-                                        const cd = new CD(Number(id), titulo, Number(ano), Number(duracao), artista);
-                                        cd.definirLocalizacao(localizacao);
-                                        biblioteca.registrarItem(cd);
-                                        console.log("CD adicionado com sucesso!");
-                                        mostrarMenu();
-                                    });
-                                });
-                                break;
-                            case "4":
-                                rl.question("Duração (em minutos): ", (duracao) => {
-                                    rl.question("Diretor: ", (diretor) => {
-                                        const dvd = new DVD(Number(id), titulo, Number(ano), Number(duracao), diretor);
-                                        dvd.definirLocalizacao(localizacao);
-                                        biblioteca.registrarItem(dvd);
-                                        console.log("DVD adicionado com sucesso!");
-                                        mostrarMenu();
-                                    });
-                                });
-                                break;
-                            default:
-                                console.log("Tipo de item inválido.");
-                                mostrarMenu();
-                        }
+function adicionarItem(): void {
+    console.log("\nAdicionar Item ao Acervo");
+    console.log("1. Livro");
+    console.log("2. Revista");
+    console.log("3. CD");
+    console.log("4. DVD");
+    console.log("5. Voltar ao menu principal");
+    rl.question("Escolha o tipo de item: ", (tipo) => {
+        switch (tipo) {
+            case '1':
+                adicionarLivro();
+                break;
+            case '2':
+                adicionarRevista();
+                break;
+            case '3':
+                adicionarCD();
+                break;
+            case '4':
+                adicionarDVD();
+                break;
+            case '5':
+                exibirMenu();
+                break;
+            default:
+                console.log("Opção inválida");
+                adicionarItem();
+        }
+    });
+}
+
+function adicionarLivro(): void {
+    rl.question("Título: ", (titulo) => {
+        rl.question("Autor: ", (autor) => {
+            rl.question("Ano de Publicação: ", (ano) => {
+                rl.question("Editora: ", (editora) => {
+                    rl.question("ISBN: ", (isbn) => {
+                        rl.question("Edição: ", (edicao) => {
+                            try {
+                                const livro = new Livro(titulo, autor, parseInt(ano), editora, isbn, parseInt(edicao));
+                                biblioteca.adicionarItem(livro);
+                                console.log(`Livro adicionado com sucesso. ID: ${livro.id}`);
+                            } catch (error) {
+                                console.error(`Erro ao adicionar livro: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                            }
+                            exibirMenu();
+                        });
                     });
                 });
             });
@@ -119,73 +116,215 @@ function adicionarItem() {
     });
 }
 
-function removerItem() {
-    rl.question("ID do item a ser removido: ", (id) => {
+function adicionarRevista(): void {
+    rl.question("Título: ", (titulo) => {
+        rl.question("Ano de Publicação: ", (ano) => {
+            rl.question("Editora: ", (editora) => {
+                rl.question("Edição: ", (edicao) => {
+                    try {
+                        const revista = new Revista(titulo, parseInt(ano), editora, parseInt(edicao));
+                        biblioteca.adicionarItem(revista);
+                        console.log(`Revista adicionada com sucesso. ID: ${revista.id}`);
+                    } catch (error) {
+                        console.error(`Erro ao adicionar revista: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                    }
+                    exibirMenu();
+                });
+            });
+        });
+    });
+}
+
+function adicionarCD(): void {
+    rl.question("Título: ", (titulo) => {
+        rl.question("Ano de Publicação: ", (ano) => {
+            rl.question("Duração (em minutos): ", (duracao) => {
+                rl.question("Artista: ", (artista) => {
+                    try {
+                        const cd = new CD(titulo, parseInt(ano), duracao, artista);
+                        biblioteca.adicionarItem(cd);
+                        console.log(`CD adicionado com sucesso. ID: ${cd.id}`);
+                    } catch (error) {
+                        console.error(`Erro ao adicionar CD: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                    }
+                    exibirMenu();
+                });
+            });
+        });
+    });
+}
+
+function adicionarDVD(): void {
+    rl.question("Título: ", (titulo) => {
+        rl.question("Ano de Publicação: ", (ano) => {
+            rl.question("Duração (em minutos): ", (duracao) => {
+                rl.question("Diretor: ", (diretor) => {
+                    try {
+                        const dvd = new DVD(titulo, parseInt(ano), duracao, diretor);
+                        biblioteca.adicionarItem(dvd);
+                        console.log(`DVD adicionado com sucesso. ID: ${dvd.id}`);
+                    } catch (error) {
+                        console.error(`Erro ao adicionar DVD: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                    }
+                    exibirMenu();
+                });
+            });
+        });
+    });
+}
+
+function removerItem(): void {
+    rl.question("Digite o ID do item a ser removido: ", (id) => {
         try {
-            biblioteca.removerItem(Number(id));
-            console.log("Item removido com sucesso!");
-        } catch (erro: unknown) {
-            if (erro instanceof Error) {
-                console.error("Erro ao remover item:", erro.message);
-            } else {
-                console.error("Erro desconhecido ao remover item");
-            }
+            biblioteca.removerItem(id);
+            console.log("Item removido com sucesso.");
+        } catch (error) {
+            console.error(`Erro ao remover item: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
         }
-        mostrarMenu();
+        exibirMenu();
     });
 }
 
-function buscarItem() {
-    rl.question("ID do item a ser buscado: ", (id) => {
-        const item = biblioteca.buscarItem(Number(id));
-        if (item) {
-            console.log("Item encontrado:", item.obterDetalhes());
+function buscarItem(): void {
+    rl.question("Digite o título do item a ser buscado: ", (titulo) => {
+        const itensEncontrados = biblioteca.buscarPorTitulo(titulo);
+        if (itensEncontrados.length > 0) {
+            console.log("Itens encontrados:");
+            itensEncontrados.forEach(item => {
+                console.log(`ID: ${item.id}, Título: ${item.titulo}, Disponível: ${item.disponivel ? 'Sim' : 'Não'}`);
+            });
         } else {
-            console.log("Item não encontrado.");
+            console.log("Nenhum item encontrado com esse título.");
         }
-        mostrarMenu();
+        exibirMenu();
     });
 }
 
-function listarAcervo() {
-    console.log("Acervo da biblioteca:");
-    biblioteca.listarAcervo().forEach(item => console.log(item.obterDetalhes()));
-    mostrarMenu();
-}
-
-function emprestarItem() {
-    rl.question("ID do item a ser emprestado: ", (id) => {
-        const item = biblioteca.buscarItem(Number(id));
+function editarItem(): void {
+    rl.question("Digite o ID do item a ser editado: ", (id) => {
+        const item = biblioteca.buscarPorId(id);
         if (item) {
-            try {
-                item.emprestar();
-                console.log("Item emprestado com sucesso!");
-            } catch (erro: unknown) {
-                if (erro instanceof Error) {
-                    console.error("Erro ao emprestar item:", erro.message);
-                } else {
-                    console.error("Erro desconhecido ao emprestar item");
+            console.log("Item encontrado. O que você gostaria de editar?");
+            console.log("1. Título");
+            console.log("2. Ano de Publicação");
+            console.log("3. Voltar ao menu principal");
+            rl.question("Escolha uma opção: ", (opcao) => {
+                switch (opcao) {
+                    case '1':
+                        rl.question("Novo título: ", (novoTitulo) => {
+                            try {
+                                biblioteca.editarItem(id, { titulo: novoTitulo });
+                                console.log("Título atualizado com sucesso.");
+                            } catch (error) {
+                                console.error(`Erro ao editar item: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                            }
+                            exibirMenu();
+                        });
+                        break;
+                    case '2':
+                        rl.question("Novo ano de publicação: ", (novoAno) => {
+                            try {
+                                biblioteca.editarItem(id, { anoPublicacao: parseInt(novoAno) });
+                                console.log("Ano de publicação atualizado com sucesso.");
+                            } catch (error) {
+                                console.error(`Erro ao editar item: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                            }
+                            exibirMenu();
+                        });
+                        break;
+                    case '3':
+                        exibirMenu();
+                        break;
+                    default:
+                        console.log("Opção inválida");
+                        editarItem();
                 }
-            }
+            });
         } else {
             console.log("Item não encontrado.");
+            exibirMenu();
         }
-        mostrarMenu();
     });
 }
 
-function devolverItem() {
-    rl.question("ID do item a ser devolvido: ", (id) => {
-        const item = biblioteca.buscarItem(Number(id));
-        if (item) {
-            item.devolver();
-            console.log("Item devolvido com sucesso!");
-        } else {
-            console.log("Item não encontrado.");
+function emprestarItem(): void {
+    rl.question("Digite o ID do item a ser emprestado: ", (id) => {
+        try {
+            biblioteca.emprestarItem(id);
+            console.log("Item emprestado com sucesso.");
+        } catch (error) {
+            console.error(`Erro ao emprestar item: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
         }
-        mostrarMenu();
+        exibirMenu();
     });
 }
 
-console.log("Bem-vindo ao Sistema de Gerenciamento da Biblioteca!");
-mostrarMenu();
+function devolverItem(): void {
+    rl.question("Digite o ID do item a ser devolvido: ", (id) => {
+        try {
+            biblioteca.devolverItem(id);
+            console.log("Item devolvido com sucesso.");
+        } catch (error) {
+            console.error(`Erro ao devolver item: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+        }
+        exibirMenu();
+    });
+}
+
+function verificarDisponibilidade(): void {
+    console.log("\nVerificar Disponibilidade");
+    console.log("1. Por título");
+    console.log("2. Por autor");
+    console.log("3. Por edição");
+    console.log("4. Por editora");
+    console.log("5. Por ID");
+    console.log("6. Por duração");
+    console.log("7. Por ano");
+    console.log("8. Por diretor");
+    console.log("9. Voltar ao menu principal");
+    rl.question("Escolha uma opção: ", (opcao) => {
+        if (opcao === '9') {
+            exibirMenu();
+            return;
+        }
+        const parametros = ['titulo', 'autor', 'edicao', 'editora', 'id', 'duracao', 'ano', 'diretor'];
+        const parametroEscolhido = parametros[parseInt(opcao) - 1];
+        if (parametroEscolhido) {
+            rl.question(`Digite o ${parametroEscolhido}: `, (valor) => {
+                try {
+                    const resultados = biblioteca.verificarDisponibilidade(parametroEscolhido, valor);
+                    if (resultados.length > 0) {
+                        console.log("Itens encontrados:");
+                        resultados.forEach(resultado => {
+                            console.log(`ID: ${resultado.id}, Título: ${resultado.titulo}, Disponibilidade: ${resultado.disponivel ? "Disponível" : "Emprestado"}`);
+                        });
+                    } else {
+                        console.log("Nenhum item encontrado.");
+                    }
+                } catch (error) {
+                    console.error(`Erro ao verificar disponibilidade: ${error instanceof Error ? error.message : 'Erro desconhecido'}`);
+                }
+                exibirMenu();
+            });
+        } else {
+            console.log("Opção inválida");
+            verificarDisponibilidade();
+        }
+    });
+}
+
+function listarTodosItens(): void {
+    const todosItens = biblioteca.listarTodosItens();
+    if (todosItens.length > 0) {
+        console.log("\nLista de todos os itens no acervo:");
+        todosItens.forEach(item => {
+            console.log(`ID: ${item.id}, Título: ${item.titulo}, Tipo: ${item.constructor.name}, Disponível: ${item.disponivel ? 'Sim' : 'Não'}`);
+        });
+    } else {
+        console.log("O acervo está vazio.");
+    }
+    exibirMenu();
+}
+
+console.log("Bem-vindo ao Sistema de Gerenciamento da Biblioteca Online!");
+exibirMenu();
