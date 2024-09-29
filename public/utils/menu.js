@@ -39,7 +39,7 @@ class Menu {
             "Delete an item;",
             "Find items by title;",
             "Find all items;",
-            "Barrow;",
+            "Borrow;",
             "Give it back;",
             "Exit;",
         ];
@@ -48,15 +48,15 @@ class Menu {
         let keep = true;
         while (keep) {
             console.log("╔══════════════════════════════════════╗");
-            console.log("║          Welcome to ACERVO-ADA     ║");
+            console.log("║          Welcome to ACERVO-ADA       ║");
             console.log("╠══════════════════════════════════════╣");
-            console.log("║        What do you wanna do?       ║");
+            console.log("║        What do you wanna do?         ║");
             console.log("╠══════════════════════════════════════╣");
             for (let i = 0; i < this.options.length; i++) {
                 console.log(`║ ${i + 1}. ${this.options[i]}${" ".repeat(34 - this.options[i].length)}║`);
             }
             console.log("╠══════════════════════════════════════╣");
-            console.log("║ Choose an option:                   ║");
+            console.log("║ Choose an option:                    ║");
             console.log("╚══════════════════════════════════════╝");
             let opt = Number(prompt.question("Your choice: "));
             switch (opt) {
@@ -76,36 +76,33 @@ class Menu {
                     this.findAll(this.options[4]);
                     break;
                 case 6:
-                    console.log(this.options[5]);
-                    let title = prompt.question("Inform title to be borrowed: ");
-                    this.library.barrowed(title);
+                    this.borrow(this.options[5]);
                     break;
                 case 7:
-                    console.log(this.options[6]);
-                    let id = Number(prompt.question("Inform id to be given back: "));
-                    this.library.giveBack(id);
+                    this.giveBack(this.options[5]);
                     break;
                 case 8:
                     console.log(this.options[7]);
                     keep = false;
                     break;
                 default:
-                    console.log("║ Invalid option                         ║");
+                    console.log("╔══════════════════════════════════════════╗");
+                    console.log("║              Invalid option              ║");
+                    console.log("╚══════════════════════════════════════════╝");
                     break;
             }
-            console.log("╚══════════════════════════════════════╝");
         }
     }
     add(option) {
         console.log(`Option selected: ${option} \n`);
         console.log("╔══════════════════════════════════════════╗");
-        console.log("║           What do you wanna add?       ║");
+        console.log("║           What do you wanna add?         ║");
         console.log("╠══════════════════════════════════════════╣");
-        console.log("║ 1. Add new CD                           ║");
-        console.log("║ 2. Add new DVD                          ║");
-        console.log("║ 3. Add new Book                         ║");
-        console.log("║ 4. Add new Magazine                     ║");
-        console.log("║ 5. Exit                                 ║");
+        console.log("║ 1. Add new CD                            ║");
+        console.log("║ 2. Add new DVD                           ║");
+        console.log("║ 3. Add new Book                          ║");
+        console.log("║ 4. Add new Magazine                      ║");
+        console.log("║ 5. Exit                                  ║");
         console.log("╚══════════════════════════════════════════╝");
         let opt = Number(prompt.question("Choose a type: "));
         switch (opt) {
@@ -167,7 +164,7 @@ class Menu {
     update(option) {
         console.log(`Option selected: ${option} \n`);
         console.log(`╔══════════════════════════════════════════╗`);
-        console.log(`║           What do you wanna update?    ║`);
+        console.log(`║           What do you wanna update?      ║`);
         console.log(`╠══════════════════════════════════════════╣`);
         console.log(`║ 1. Update CD                             ║`);
         console.log(`║ 2. Update DVD                            ║`);
@@ -252,6 +249,16 @@ class Menu {
     findAll(option) {
         console.log(`Option selected: ${option} \n`);
         this.library.read();
+    }
+    borrow(option) {
+        console.log(`Option selected: ${option} \n`);
+        let idBorrow = Number(prompt.question("Inform ID to be borrowed: "));
+        this.library.borrowed(idBorrow);
+    }
+    giveBack(option) {
+        console.log(`Option selected: ${option} \n`);
+        let idGiveBack = Number(prompt.question("Inform id to be given back: "));
+        this.library.giveBack(idGiveBack);
     }
 }
 exports.Menu = Menu;

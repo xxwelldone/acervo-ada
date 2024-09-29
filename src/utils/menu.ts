@@ -55,14 +55,10 @@ export class Menu {
           this.findAll(this.options[4]);
           break;
         case 6:
-          console.log(this.options[5]);
-          let idBorrow = Number(prompt.question("Inform title to be borrowed: "));
-          this.library.borrowed(idBorrow);
+          this.borrow(this.options[5]);
           break;
         case 7:
-          console.log(this.options[6]);
-          let idGiveBack = Number(prompt.question("Inform id to be given back: "));
-          this.library.giveBack(idGiveBack);
+          this.giveBack(this.options[5]);
           break;
         case 8:
           console.log(this.options[7]);
@@ -74,7 +70,6 @@ export class Menu {
           console.log("╚══════════════════════════════════════════╝");
           break;
       }
-
     }
   }
 
@@ -353,5 +348,15 @@ export class Menu {
   findAll(option: string) {
     console.log(`Option selected: ${option} \n`);
     this.library.read();
+  }
+  borrow(option: string) {
+    console.log(`Option selected: ${option} \n`);
+    let idBorrow = Number(prompt.question("Inform ID to be borrowed: "));
+    this.library.borrowed(idBorrow);
+  }
+  giveBack(option: string) {
+    console.log(`Option selected: ${option} \n`);
+    let idGiveBack = Number(prompt.question("Inform id to be given back: "));
+    this.library.giveBack(idGiveBack);
   }
 }

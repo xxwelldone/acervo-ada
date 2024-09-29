@@ -63,19 +63,16 @@ class Biblioteca {
             console.log("No users were found");
         }
     }
-    barrowed(title) {
-        title = this.normalizeText(title);
-        const index = this.collection.findIndex((item) => {
-            return item.title === title;
-        });
+    borrowed(id) {
+        const index = this.collection.findIndex((item) => item.id === id);
         if (index >= 0) {
             if (this.collection[index].available === true) {
                 this.collection[index].available = false;
-                console.log(`Now, this item is barrowed to you, give it back by using it's id: ${this.collection[index].id}`);
+                console.log(`Now, this item is borrowed to you, give it back by using it's id: ${this.collection[index].id}`);
                 console.table(this.collection[index]);
             }
             else {
-                console.log("This item is already barrowed");
+                console.log("This item is already borrowed");
             }
         }
         else {
@@ -91,7 +88,7 @@ class Biblioteca {
                 console.table(this.collection[index]);
             }
             else {
-                console.log("Seems like you gave us an ID to be given back, but this item isn't barrowed in the first place.");
+                console.log("Seems like you gave us an ID to be given back, but this item isn't borrowed in the first place.");
             }
         }
         else {
