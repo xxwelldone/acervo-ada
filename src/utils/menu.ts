@@ -21,9 +21,9 @@ export class Menu {
     let keep = true;
     while (keep) {
       console.log("╔══════════════════════════════════════╗");
-      console.log("║          Welcome to ACERVO-ADA     ║");
+      console.log("║          Welcome to ACERVO-ADA       ║");
       console.log("╠══════════════════════════════════════╣");
-      console.log("║        What do you wanna do?       ║");
+      console.log("║        What do you wanna do?         ║");
       console.log("╠══════════════════════════════════════╣");
       for (let i = 0; i < this.options.length; i++) {
         console.log(
@@ -33,7 +33,7 @@ export class Menu {
         );
       }
       console.log("╠══════════════════════════════════════╣");
-      console.log("║ Choose an option:                   ║");
+      console.log("║ Choose an option:                    ║");
       console.log("╚══════════════════════════════════════╝");
 
       let opt = Number(prompt.question("Your choice: "));
@@ -69,23 +69,25 @@ export class Menu {
           keep = false;
           break;
         default:
-          console.log("║ Invalid option                         ║");
+          console.log("╔══════════════════════════════════════════╗");
+          console.log("║              Invalid option              ║");
+          console.log("╚══════════════════════════════════════════╝");
           break;
       }
-      console.log("╚══════════════════════════════════════╝");
+
     }
   }
 
   add(option: string) {
     console.log(`Option selected: ${option} \n`);
     console.log("╔══════════════════════════════════════════╗");
-    console.log("║           What do you wanna add?       ║");
+    console.log("║           What do you wanna add?         ║");
     console.log("╠══════════════════════════════════════════╣");
-    console.log("║ 1. Add new CD                           ║");
-    console.log("║ 2. Add new DVD                          ║");
-    console.log("║ 3. Add new Book                         ║");
-    console.log("║ 4. Add new Magazine                     ║");
-    console.log("║ 5. Exit                                 ║");
+    console.log("║ 1. Add new CD                            ║");
+    console.log("║ 2. Add new DVD                           ║");
+    console.log("║ 3. Add new Book                          ║");
+    console.log("║ 4. Add new Magazine                      ║");
+    console.log("║ 5. Exit                                  ║");
     console.log("╚══════════════════════════════════════════╝");
 
     let opt = Number(prompt.question("Choose a type: "));
@@ -211,7 +213,7 @@ export class Menu {
   update(option: string) {
     console.log(`Option selected: ${option} \n`);
     console.log(`╔══════════════════════════════════════════╗`);
-    console.log(`║           What do you wanna update?    ║`);
+    console.log(`║           What do you wanna update?      ║`);
     console.log(`╠══════════════════════════════════════════╣`);
     console.log(`║ 1. Update CD                             ║`);
     console.log(`║ 2. Update DVD                            ║`);
