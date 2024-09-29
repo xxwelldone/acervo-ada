@@ -12,7 +12,7 @@ export class Menu {
     "Delete an item;",
     "Find items by title;",
     "Find all items;",
-    "Barrow;",
+    "Borrow;",
     "Give it back;",
     "Exit;",
   ];
@@ -56,13 +56,13 @@ export class Menu {
           break;
         case 6:
           console.log(this.options[5]);
-          let title = prompt.question("Inform title to be borrowed: ");
-          this.library.barrowed(title);
+          let idBorrow = Number(prompt.question("Inform title to be borrowed: "));
+          this.library.borrowed(idBorrow);
           break;
         case 7:
           console.log(this.options[6]);
-          let id = Number(prompt.question("Inform id to be given back: "));
-          this.library.giveBack(id);
+          let idGiveBack = Number(prompt.question("Inform id to be given back: "));
+          this.library.giveBack(idGiveBack);
           break;
         case 8:
           console.log(this.options[7]);
