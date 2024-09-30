@@ -4,6 +4,7 @@ import { CD } from "../Models/cd";
 import { DVD } from "../Models/dvd";
 import { Livro } from "../Models/livro";
 import { Revista } from "../Models/revista";
+
 export class Menu {
   library = new Biblioteca();
   options: string[] = [
@@ -14,7 +15,8 @@ export class Menu {
     "Find all items;",
     "Borrow;",
     "Give it back;",
-    "Exit;",
+    "Count available items;",
+    "Exit;"
   ];
 
   main() {
@@ -58,10 +60,13 @@ export class Menu {
           this.borrow(this.options[5]);
           break;
         case 7:
-          this.giveBack(this.options[5]);
+          this.giveBack(this.options[6]);
           break;
         case 8:
-          console.log(this.options[7]);
+          this.countAvailableItems(this.options[7]);
+          break;
+        case 9:
+          console.log("Exiting...");
           keep = false;
           break;
         default:
@@ -71,6 +76,12 @@ export class Menu {
           break;
       }
     }
+  }
+
+  countAvailableItems(option: string) {
+    const count = Biblioteca.countAvailableItems(this.library);
+    console.log(`Option selected: ${option} \n`);
+    console.log(`Available items: ${count}`);
   }
 
   add(option: string) {
@@ -112,7 +123,6 @@ export class Menu {
           )
         );
         console.log(createdCD);
-
         break;
 
       case 2:

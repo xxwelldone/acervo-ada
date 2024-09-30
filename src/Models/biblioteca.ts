@@ -10,6 +10,11 @@ export class Biblioteca<T extends ItemAcervo> {
   public generateID(): number {
     return this.id++;
   }
+
+  public static countAvailableItems(library: Biblioteca<ItemAcervo>): number {
+    return library.collection.filter(item => item.available).length;
+  }
+
   create(item: T): T {
     item.title = this.normalizeText(item.title);
     this.collection.push(item);
